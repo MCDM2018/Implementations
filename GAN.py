@@ -3,36 +3,8 @@ import numpy as np
 import torch.nn as nn
 import torch.optim as optim
 from dataloader import dataloader
-import kernel
 import torchvision
-from torch.autograd import grad,Variable,gradcheck
-from itertools import product
-from torch._six import container_abcs
-import xlsxwriter
 
-
-# class jacobian(nn.Module):
-#     def __init__(self,generator,latent_dim,batch_size):
-#         super(jacobian,self).__init__()
-#         self.generator=generator
-#         self.batch_size=batch_size
-#         self.latent_dim=latent_dim
-#
-#     def forward(self, input):
-#         input=Variable(input,requires_grad=True)
-#         G_imgs = self.generator(input)
-#         G_imgs = G_imgs.view(self.batch_size, -1)
-#         jacobi = torch.zeros(self.batch_size, G_imgs.size(1), self.latent_dim)
-#
-#
-#         for p_idx in range(G_imgs.size(1)):
-#             target_tensor = Variable((torch.zeros(self.batch_size, G_imgs.size(1))).cuda(),requires_grad=True)
-#             target_tensor[:, p_idx] = 1
-#             G_imgs.backward(target_tensor, retain_graph=True,create_graph=True)
-#             jacobi[:, p_idx, :]=input.grad.data
-#
-#         return jacobi
-#
 
 class generator(nn.Module):
     # Network Architecture is exactly same as in infoGAN (https://arxiv.org/abs/1606.03657)
@@ -198,7 +170,8 @@ class GAN(object):
                 self.G_optimizer.zero_grad()
                 G_ = self.G(z_)
                 D_fake = self.D(G_)
-
+                
+                ######## following codes are practical implementation for the paper ########## 
                 pertubation_del=(torch.randn(self.batch_size, self.z_dim)).cuda()
                 eps=self.eps
                 pertu_length=torch.norm(pertubation_del, dim=1, keepdim=True)
@@ -223,6 +196,7 @@ class GAN(object):
                         L_min += (Q[i] - self.eig_min) ** 2
                         count_min+=1
                 L=L_max+L_min
+                #################### end of implementation for the paper ####################
 
                 G_loss = self.BCE_loss(D_fake, self.y_real_)
 
