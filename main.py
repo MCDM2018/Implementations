@@ -1,29 +1,13 @@
 import argparse, os, torch
 from GAN import GAN
-from CGAN import CGAN
-from LSGAN import LSGAN
-from DRAGAN import DRAGAN
-from ACGAN import ACGAN
-from WGAN import WGAN
-from WGAN_GP import WGAN_GP
-from infoGAN import infoGAN
-from EBGAN import EBGAN
-from BEGAN import BEGAN
-from GAN_svd import GAN_svd
-from GAN_stein import GAN_stein
-from GAN_euclidean import GAN_euclidean
-from WGAN_GP_ResNet import WGAN_GP_ResNet
-from GAN_rank import GAN_rank
-from GAN_structure import GAN_structure
-from GAN_Jacobian import GAN_Jacobian
+
 """parsing and configuration"""
 def parse_args():
     desc = "Pytorch implementation of GAN collections"
     parser = argparse.ArgumentParser(description=desc)
 
     parser.add_argument('--gan_type', type=str, default='GAN',
-                        choices=['GAN', 'CGAN', 'infoGAN', 'ACGAN', 'EBGAN', 'BEGAN', 'WGAN', 'WGAN_GP', 'DRAGAN', 'LSGAN','GAN_svd','GAN_stein','GAN_euclidean'
-                                 ,'WGAN_GP_ResNet','GAN_rank','GAN_structure','GAN_Jacobian'],
+                        choices=['GAN'],
                         help='The type of GAN')
     parser.add_argument('--dataset', type=str, default='mnist', choices=['mnist', 'fashion-mnist', 'cifar10', 'cifar100', 'svhn', 'stl10', 'lsun-bed','celeba'],
                         help='The name of dataset')
@@ -89,38 +73,6 @@ def main():
         # declare instance for GAN
     if args.gan_type == 'GAN':
         gan = GAN(args)
-    elif args.gan_type == 'CGAN':
-        gan = CGAN(args)
-    elif args.gan_type == 'ACGAN':
-        gan = ACGAN(args)
-    elif args.gan_type == 'infoGAN':
-        gan = infoGAN(args, SUPERVISED=False)
-    elif args.gan_type == 'EBGAN':
-        gan = EBGAN(args)
-    elif args.gan_type == 'WGAN':
-        gan = WGAN(args)
-    elif args.gan_type == 'WGAN_GP':
-        gan = WGAN_GP(args)
-    elif args.gan_type == 'DRAGAN':
-        gan = DRAGAN(args)
-    elif args.gan_type == 'LSGAN':
-        gan = LSGAN(args)
-    elif args.gan_type == 'BEGAN':
-        gan = BEGAN(args)
-    elif args.gan_type == 'GAN_svd':
-        gan = GAN_svd(args)
-    elif args.gan_type == 'GAN_stein':
-        gan = GAN_stein(args)
-    elif args.gan_type == 'GAN_euclidean':
-        gan = GAN_euclidean(args)
-    elif args.gan_type == 'WGAN_GP_ResNet':
-        gan = WGAN_GP_ResNet(args)
-    elif args.gan_type == 'GAN_rank':
-        gan = GAN_rank(args)
-    elif args.gan_type == 'GAN_structure':
-        gan = GAN_structure(args)
-    elif args.gan_type =='GAN_Jacobian':
-        gan = GAN_Jacobian(args)
     else:
         raise Exception("[!] There is no option for " + args.gan_type)
 
