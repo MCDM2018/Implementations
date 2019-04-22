@@ -1,5 +1,9 @@
 # Implementations
-Is Generator Conditioning Causally related to GAN performance? 
+Pytorch Implementation for
+
+' Is Generator Conditioning Causally related to GAN performance? '
+
+https://icml.cc/Conferences/2018/Schedule?showEvent=2868
 
 How to run this ?
 
